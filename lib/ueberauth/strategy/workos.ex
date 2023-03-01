@@ -9,20 +9,58 @@ defmodule Ueberauth.Strategy.WorkOS do
     * `api_key`: (**Required**) WorkOS API key, which also acts as the OAuth client secret. This key
       is environment-specific and may be supplied using runtime configuration.
 
+    * `client_id`: (**Required**) OAuth client ID obtained from WorkOS. This ID is
+      environment-specific and may be supplied using runtime configuration.
+
     * `callback_url`: Redirect URI to send users for the callback phase. This URL
       must be allowed in the WorkOS configuration for the environment matching the Client ID.
       Defaults to a callback URL calculated using the endpoint host and provider name.
 
-    * `client_id`: (**Required**) OAuth client ID obtained from WorkOS. This ID is
-      environment-specific and may be supplied using runtime configuration.
-
   Example configuration:
 
-      # config/runtime.exs
+      config :ueberauth, Ueberauth,
+        providers: [
+          workos: {Ueberauth.Strategy.WorkOS, [
+            api_key: System.fetch_env!("WORKOS_API_KEY"),
+            client_id: System.fetch_env!("WORKOS_CLIENT_ID")
+          ]}
+        ]
+
+  Alternatively, you may configure the strategy module directly:
+
       config :ueberauth, Ueberauth.Strategy.WorkOS,
         api_key: System.fetch_env!("WORKOS_API_KEY"),
         client_id: System.fetch_env!("WORKOS_CLIENT_ID")
 
+  ## Connection Selector
+
+  In addition to the configuration mentioned above, the request phase also accepts several params
+  allowing the client to specify details of the login process. One of these is the **Connection
+  Selector**. The WorkOS documentation states:
+
+  > To indicate the connection to use for authentication, use one of the following connection
+  > selectors: connection, organization, or provider.
+  >
+  > These connection selectors are mutually exclusive, and exactly one must be provided.
+
+  Therefore, the request phase must include exactly one of `connection`, `organization`, or
+  `provider` in the incoming params. These may be provided directly by the client, or inserted
+  before Ueberauth runs (before `plug Ueberauth`) by a custom plug. If absent, the request will
+  fail immediately.
+
+  ## Additional Params
+
+  WorkOS also provides the ability to give "hints" about the domain or login. These hints may also
+  be provided by the client or another plug using connection params:
+
+    * `domain_hint`: According to WorkOS: _Can be used to pre-fill the domain field when initiating
+      authentication with Microsoft OAuth, or with a `GoogleSAML` connection type._
+
+    * `login_hint`: According to WorkOS: _Can be used to pre-fill the username/email address field
+      of the IdP sign-in page for the user, if you know their username ahead of time._
+
+  If you use an email address to determine the connection selector, then it is advisable to use the
+  same email address as the `login_hint`.
   """
   use Ueberauth.Strategy
 
