@@ -111,6 +111,14 @@ defmodule Ueberauth.Strategy.WorkOS do
     end
   end
 
+  def handle_callback!(%Plug.Conn{params: %{"error" => error}} = conn) do
+    set_errors!(conn, [error("auth_failed", error)])
+  end
+
+  def handle_callback!(conn) do
+    set_errors!(conn, [error("missing_code", "No code received")])
+  end
+
   @doc false
   @impl Ueberauth.Strategy
   def handle_cleanup!(conn) do

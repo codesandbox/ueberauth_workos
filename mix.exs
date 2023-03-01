@@ -29,6 +29,7 @@ defmodule UeberauthWorkos.MixProject do
     [
       {:ex_doc, "~> 0.29", only: :dev, runtime: false},
       {:jason, "~> 1.0", optional: true},
+      {:mock, "~> 0.3.0", only: :test},
       {:oauth2, "~> 2.0"},
       {:ueberauth, "~> 0.10"}
     ]
