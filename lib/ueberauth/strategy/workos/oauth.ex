@@ -41,16 +41,14 @@ defmodule Ueberauth.Strategy.WorkOS.OAuth do
   """
   @spec client(keyword) :: OAuth2.Client.t()
   def client(opts \\ []) do
-    config =
-      :ueberauth
-      |> Application.fetch_env!(Ueberauth.Strategy.WorkOS)
-      |> check_credential(:client_id)
-      |> check_credential(:api_key, :client_secret)
+    config = Application.get_env(:ueberauth, Ueberauth.Strategy.WorkOS) || []
 
     client_opts =
       @defaults
       |> Keyword.merge(config)
       |> Keyword.merge(opts)
+      |> check_credential(:client_id)
+      |> check_credential(:api_key, :client_secret)
 
     json_library = Ueberauth.json_library()
 
@@ -79,11 +77,7 @@ defmodule Ueberauth.Strategy.WorkOS.OAuth do
             raise """
             Missing environment variable #{inspect(env_key)} in configuration for Ueberauth.Strategy.WorkOS
 
-            This variable is configured for the #{inspect(key)} key:
-
-                config :ueberauth, Ueberauth.Strategy.WorkOS,
-                  #{key}: {:system, #{inspect(env_key)}}
-
+            This variable is configured for the #{inspect(key)} key.
             """
 
           value ->
@@ -101,6 +95,16 @@ defmodule Ueberauth.Strategy.WorkOS.OAuth do
 
       Example configuration:
 
+          config :ueberauth, Ueberauth,
+            providers: [
+              workos: {Ueberauth.Strategy.WorkOS, [
+                api_key: "...",
+                client_id: "..."
+              ]}
+            ]
+
+      OR
+
           config :ueberauth, Ueberauth.Strategy.WorkOS,
             api_key: "...",
             client_id: "..."
@@ -109,19 +113,6 @@ defmodule Ueberauth.Strategy.WorkOS.OAuth do
     end
 
     config
-  end
-
-  defp validate_key_exists(_, _) do
-    raise """
-    Invalid configuration for Ueberauth.Strategy.WorkOS
-
-    Please provide a keyword list in your configuration:
-
-        config :ueberauth, Ueberauth.Strategy.WorkOS,
-          api_key: "...",
-          client_id: "..."
-
-    """
   end
 
   @doc "Get the authorization URL used during the request phase of Ueberauth"

@@ -147,7 +147,7 @@ defmodule Ueberauth.Strategy.WorkOS do
     case {request_options[:client_id], request_options[:api_key]} do
       {nil, _} -> base_options
       {_, nil} -> base_options
-      {id, secret} -> [client_id: id, client_secret: secret] ++ base_options
+      {id, secret} -> [client_id: id, api_key: secret] ++ base_options
     end
   end
 end
