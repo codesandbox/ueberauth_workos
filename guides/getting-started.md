@@ -1,17 +1,6 @@
 Much of the setup for this strategy will be familiar if you have integrated with other Ueberauth strategies.
 However, there is one additional step necessary: a redirect or plug that supplies connection information to the request phase.
 
-Table of Contents:
-
-1. Set Up with WorkOS
-2. Installation
-  a. Package
-  b. Provider Configuration
-  c. OAuth Configuration
-3. Integration
-  a. Plug Integration
-  b. Connection Selector
-
 ## Set Up with WorkOS
 
 > #### Note {:.info}
@@ -42,7 +31,7 @@ Otherwise it must be a fully-qualified hostname that uses HTTPS.
 The entered URL should match **exactly** what you intend to use as the callback URL.
 For example:
 
-```
+```plain
 http://localhost:4000/auth/workos/callback
 https://example.com/auth/workos/callback
 ```
@@ -254,3 +243,13 @@ It is also possible to handle the email-to-connection-selector conversion using 
 In order to accomplish this, the custom plug must run before `plug Ueberauth` for the request phase action.
 
 A full example is not included here, however it should end with a new param `connection`, `organization`, or `provider` present in the connection struct as it is handed off to Ueberauth.
+
+### Additional Parameters
+
+You may optionally send the following parameters to the request phase in addition to the _Connection Selector_ described above:
+
+* `domain_hint`: According to WorkOS: _Can be used to pre-fill the domain field when initiating
+  authentication with Microsoft OAuth, or with a `GoogleSAML` connection type._
+
+* `login_hint`: According to WorkOS: _Can be used to pre-fill the username/email address field of
+  the IdP sign-in page for the user, if you know their username ahead of time._

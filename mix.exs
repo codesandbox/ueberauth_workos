@@ -1,13 +1,21 @@
 defmodule UeberauthWorkos.MixProject do
   use Mix.Project
 
+  @version "0.0.1-rc.0"
+  @source_url "https://github.com/codesandbox/ueberauth_workos"
+
   def project do
     [
       app: :ueberauth_workos,
-      version: "0.1.0",
-      elixir: "~> 1.14",
+      version: @version,
+      elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      name: "Ueberauth Strategy for WorkOS",
+      source_url: @source_url,
+      homepage_url: @source_url,
+      deps: deps(),
+      docs: docs(),
+      package: package()
     ]
   end
 
@@ -19,9 +27,39 @@ defmodule UeberauthWorkos.MixProject do
 
   defp deps do
     [
+      {:ex_doc, "~> 0.29", only: :dev, runtime: false},
       {:jason, "~> 1.0", optional: true},
       {:oauth2, "~> 2.0"},
       {:ueberauth, "~> 0.10"}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      extras: [
+        "README.md": [title: "Overview"],
+        "guides/getting-started.md": [title: "Getting Started"],
+        "CODE_OF_CONDUCT.md": [title: "Code of Conduct"],
+        "CONTRIBUTING.md": [title: "Contributing"],
+        LICENSE: [title: "License"]
+      ]
+    ]
+  end
+
+  defp package do
+    [
+      description: "Ueberauth Strategy for WorkOS Single Sign-On",
+      files: [
+        "guides",
+        "lib",
+        "LICENSE",
+        "mix.exs",
+        "README.md"
+      ],
+      licenses: ["MIT"],
+      links: %{"GitHub" => @source_url},
+      maintainers: ["AJ Foster"]
     ]
   end
 end
