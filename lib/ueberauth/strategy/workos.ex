@@ -126,10 +126,10 @@ defmodule Ueberauth.Strategy.WorkOS do
 
   @spec with_connection_selector(keyword, Plug.Conn.t()) :: keyword
   defp with_connection_selector(params, conn) do
-    case conn.private do
-      %{workos_connection: connection_id} -> Keyword.put(params, :connection, connection_id)
-      %{workos_organization: org_id} -> Keyword.put(params, :organization, org_id)
-      %{workos_provider: provider} -> Keyword.put(params, :provider, provider)
+    case conn.params do
+      %{"connection" => connection_id} -> Keyword.put(params, :connection, connection_id)
+      %{"organization" => org_id} -> Keyword.put(params, :organization, org_id)
+      %{"provider" => provider} -> Keyword.put(params, :provider, provider)
       _else -> raise "Missing WorkOS connection, organization, or provider"
     end
   end
