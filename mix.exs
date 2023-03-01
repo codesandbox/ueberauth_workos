@@ -19,6 +19,7 @@ defmodule UeberauthWorkos.MixProject do
 
   defp deps do
     [
+      {:jason, "~> 1.0", optional: true},
       {:oauth2, "~> 2.0"},
       {:ueberauth, "~> 0.10"}
     ]
