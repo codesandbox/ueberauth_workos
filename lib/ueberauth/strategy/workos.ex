@@ -9,6 +9,10 @@ defmodule Ueberauth.Strategy.WorkOS do
     * `api_key`: (**Required**) WorkOS API key, which also acts as the OAuth client secret. This key
       is environment-specific and may be supplied using runtime configuration.
 
+    * `callback_url`: Redirect URI to send users for the callback phase. This URL
+      must be allowed in the WorkOS configuration for the environment matching the Client ID.
+      Defaults to a callback URL calculated using the endpoint host and provider name.
+
     * `client_id`: (**Required**) OAuth client ID obtained from WorkOS. This ID is
       environment-specific and may be supplied using runtime configuration.
 
@@ -93,7 +97,7 @@ defmodule Ueberauth.Strategy.WorkOS do
     %Credentials{
       expires: true,
       expires_at: expiration,
-      token: conn.params[:workos_token].access_token,
+      token: conn.private[:workos_token].access_token,
       token_type: "access_token"
     }
   end
@@ -102,7 +106,7 @@ defmodule Ueberauth.Strategy.WorkOS do
   @impl Ueberauth.Strategy
   def extra(conn) do
     %Extra{
-      raw_info: conn.params[:workos_profile]
+      raw_info: conn.private[:workos_profile]
     }
   end
 
@@ -110,9 +114,9 @@ defmodule Ueberauth.Strategy.WorkOS do
   @impl Ueberauth.Strategy
   def info(conn) do
     %Info{
-      email: conn.params[:workos_profile]["email"],
-      first_name: conn.params[:workos_profile]["first_name"],
-      last_name: conn.params[:workos_profile]["last_name"]
+      email: conn.private[:workos_profile]["email"],
+      first_name: conn.private[:workos_profile]["first_name"],
+      last_name: conn.private[:workos_profile]["last_name"]
     }
   end
 
