@@ -1,5 +1,7 @@
 # Ueberauth WorkOS
 
+[![Hex.pm](https://img.shields.io/hexpm/v/ueberauth_workos)](https://hex.pm/packages/ueberauth_workos)
+[![Documentation](https://img.shields.io/badge/hex-docs-blue)](https://hexdocs.pm/ueberauth_workos)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
 Ueberauth strategy for integrating with WorkOS Single Sign-On
@@ -10,14 +12,13 @@ For detailed instructions, see [Getting Started](guides/getting-started.md).
 
 ### Installation
 
-This package is not yet available on Hex.pm.
-In the meantime, you can install it directly from GitHub:
+Add `ueberauth_workos` as a dependency in `mix.exs` and run `mix deps.get`:
 
 ```elixir
 def deps do
   [
     {:ueberauth, "~> 0.10"},
-    {:ueberauth_workos, github: "codesandbox/ueberauth_workos"}
+    {:ueberauth_workos, "~> 0.0.1"}
   ]
 end
 ```

@@ -44,15 +44,13 @@ With the two environment-specific secrets available, and the Redirect URI set up
 
 ### Package
 
-Add `ueberauth_workos` as a dependency in `mix.exs` and run `mix deps.get`.
-This package is not yet available on Hex.pm.
-In the meantime, you can install it directly from GitHub:
+Add `ueberauth_workos` as a dependency in `mix.exs` and run `mix deps.get`:
 
 ```elixir
 def deps do
   [
     {:ueberauth, "~> 0.10"},
-    {:ueberauth_workos, github: "codesandbox/ueberauth_workos"}
+    {:ueberauth_workos, "~> 0.0.1"}
   ]
 end
 ```
@@ -169,12 +167,7 @@ defmodule MyAppWeb.Router
     pipe_through :browser
 
     get "/:provider", AuthController, :request
-
-    # Include this for requests with no scopes, or if you use other providers that require it.
     get "/:provider/callback", AuthController, :callback
-
-    # Include this for requests with any scopes (name and/or email).
-    post "/:provider/callback", AuthController, :callback
   end
 end
 ```

@@ -1,7 +1,7 @@
 defmodule UeberauthWorkos.MixProject do
   use Mix.Project
 
-  @version "0.0.1-rc.0"
+  @version "0.0.1"
   @source_url "https://github.com/codesandbox/ueberauth_workos"
 
   def project do
