@@ -62,7 +62,8 @@ defmodule Ueberauth.Strategy.WorkOS do
   If you use an email address to determine the connection selector, then it is advisable to use the
   same email address as the `login_hint`.
   """
-  use Ueberauth.Strategy
+  use Ueberauth.Strategy,
+    ignores_csrf_attack: true
 
   alias Ueberauth.Auth.Credentials
   alias Ueberauth.Auth.Extra
