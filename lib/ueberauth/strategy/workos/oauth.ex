@@ -84,6 +84,13 @@ defmodule Ueberauth.Strategy.WorkOS.OAuth do
             new_key_name = rename_to || key
             Keyword.put(config, new_key_name, value)
         end
+
+      value ->
+        raise """
+        Invalid value for required key #{inspect(key)} in configuration for Ueberauth.Strategy.WorkOS
+
+        This value must be a string, got: #{inspect(value)}
+        """
     end
   end
 

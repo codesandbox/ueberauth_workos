@@ -18,7 +18,7 @@ Add `ueberauth_workos` as a dependency in `mix.exs` and run `mix deps.get`:
 def deps do
   [
     {:ueberauth, "~> 0.10"},
-    {:ueberauth_workos, "~> 0.0.2"}
+    {:ueberauth_workos, "~> 0.0.3"}
   ]
 end
 ```
